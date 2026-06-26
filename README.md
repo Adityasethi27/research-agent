@@ -1,3 +1,7 @@
+## Live Demo
+**API:** https://research-agent-production-0fb3.up.railway.app  
+**Docs:** https://research-agent-production-0fb3.up.railway.app/docs
+
 # Research Agent — Agentic AI System
 
 A LangGraph-based research agent that autonomously decides, at each step, whether to search the web or query a local document store — then wraps it all behind a FastAPI endpoint so it can be called over HTTP.
