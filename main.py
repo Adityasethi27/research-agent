@@ -15,5 +15,9 @@ class QueryResponse(BaseModel):
 def ask(request: QueryRequest):
    result = agent.invoke({"messages": [HumanMessage(content=request.question)]})    
    content = result["messages"][-1].content
-   return QueryResponse(answer=str(content))
+   if isinstance(content, list):
+    answer = "".join(part.get("text", "") for part in content if isinstance(part, dict))
+   else:
+            answer = str(content)
+   return QueryResponse(answer=answer)
 
