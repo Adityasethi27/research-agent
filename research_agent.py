@@ -7,6 +7,8 @@ from langchain_core.messages import HumanMessage
 from langchain_core.tools import tool
 from langchain_chroma import Chroma
 from langchain_google_genai import GoogleGenerativeAIEmbeddings, ChatGoogleGenerativeAI
+from fastapi import FastAPI, HTTPException
+from pydantic import BaseModel
 from typing import TypedDict, Annotated
 from dotenv import load_dotenv
 import os
@@ -61,10 +63,11 @@ graph.add_edge(START, "chatter")
 graph.add_conditional_edges("chatter", should_use_tool, {"tools": "tools", "end": END})
 graph.add_edge("tools", "chatter")
 app = graph.compile()
-
-result = app.invoke({"messages": [HumanMessage(content="Summarize what the uploaded document is about")]})
-content = result["messages"][-1].content
-if isinstance(content, list):
-    print("".join(part.get("text", "") for part in content if isinstance(part, dict)))
-else:
-    print(content)
+    
+if __name__ == "__main__":
+    result = app.invoke({"messages": [HumanMessage(content="Summarize what the uploaded document is about")]})
+    content = result["messages"][-1].content
+    if isinstance(content, list):
+        print("".join(part.get("text", "") for part in content if isinstance(part, dict)))
+    else:
+        print(content)
